@@ -1,151 +1,113 @@
-<!DOCTYPE HTML>
-<!--
-	Solid State by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>API Case Study: 1</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="/assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<!DOCTYPE HTML> <html> <head> <title>API Case Study: 1</title> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" /> <link rel="stylesheet" href="/assets/css/main.css" /> <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript> </head> <body class="is-preload">
+<!-- Page Wrapper -->
+<div id="page-wrapper">
 
-		<!-- Page Wrapper -->
-			<div id="page-wrapper">
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="/index.html">BACK/HOME</a></h1>
+    </header>
 
-				<!-- Header -->
-					<header id="header">
-						<h1><a href="/index.html">BACK/HOME</a></h1>
-						
-					</header>
+    <!-- Wrapper -->
+    <section id="wrapper">
+        <header>
+            <div class="inner">
+                <h1>API Case Study: 1</h1>
+                <p>A simple vulnerability in API leads to delete page of any users.</p>
+            </div>
+        </header>
 
-				
+        <!-- Content -->
+        <div class="wrapper">
+            <div class="inner">
 
-				<!-- Wrapper -->
-					<section id="wrapper">
-						<header>
-							<div class="inner">
-								<h1>API Case Study: 1</h1>
-								<p>A simple vulnerability in API leads to delete page of any users.</p>
-							</div>
-						</header>
+                <h3 class="major">Case Study: 1</h3>
+                <p>This case study involves a simple website similar to Indeed and Glassdoor.</p>
+                <p>Features of the website include:
+                    <ul>
+                        <li>Any company can register and post jobs for their organization.</li>
+                        <li>Users can upload their documents, which admins can then review to forward or reject applications.</li>
+                    </ul>
+                </p>
 
-						<!-- Content -->
-							<div class="wrapper">
-								<div class="inner">
+                <p>I registered as an organization and posted a job listing with details like job title, minimum experience, salary, etc. The job status remained pending.</p>
+                <img src="/images/status2.png" width="1020" height="50" alt="Job Status Pending">
+                
+                <p>While viewing the job, I noticed a numeric ID in the URL.</p>
+                <img src="/images/job-id.png" alt="Job ID in URL">
+                
+                <p>I sent the request to a repeater and attempted to change the ID to access other users' information, but received a 403 Forbidden error.</p>
+                <img src="/images/403-brob.png" width="900" height="30" alt="403 Forbidden">
 
-									<h3 class="major">Case Study: 1</h3>
-                                    <p>So this is a simple website like indeed and Glassdoor. Nothing much fancy.</p>
-                                    <p>Feaure of that website:
-                                        <p>* Any company can register and post jobs for their organization.</p>
-                                        <p>* User can go to that page and upload therir docs and then any admin of that organiztion forward or reject their application</p>
-                                    </p>
-									<p>I register myself as a org. and after that i fill out things like- job title, min exp, salary, and bla bla bla. But I didn't arrpove my that job- Status: Pending.
+                <p>Then, I changed the request method from GET to DELETE.</p>
+                <p>And BOOM!!... the page was deleted.</p>
+                <img src="/images/del-req.png" width="1000" height="180" alt="Delete Request">
 
-                                    </p>
-                                        <img src=/images/status2.png width="1020" height="50">
-                                    <p>
-                                        Then I just view that job and then I saw some numeric id.
-                                    </p>
-                                        <img src=/images/job-id.png >
-                                    <p>
-                                        I send that request to repeater i tried to change that id[random number] to view other's info but pretty good luck. I got 403 forbidden.
-                                    </p>
-                                        <img src=/images/403-brob.png width="900" height="30">   
-                                    </p>
+                <p>I created a new account and replaced the new job ID with the old one from my first account. This allowed me to delete data using the DELETE method.</p>
+                <h2>An attacker could brute-force job IDs and delete nearly all data.</h2>
+                <p class="big">In APIs, rate limiting is crucial to prevent such attacks.</p>
 
-                                    <p>
-                                        I just changed my request from GET to DELETE.
-                                    </p>                             
+                <h3>Mitigation Strategies</h3>
+                <p>To prevent similar vulnerabilities, consider the following measures:</p>
+                <ul>
+                    <li><strong>Authorization Checks:</strong> Ensure proper authorization checks are in place to verify if the user has permission to delete the resource.</li>
+                    <li><strong>Rate Limiting:</strong> Implement rate limiting to prevent brute-force attacks.</li>
+                    <li><strong>Use HTTP Methods Properly:</strong> Only allow DELETE requests from authenticated and authorized users. Verify the request's legitimacy before processing it.</li>
+                    <li><strong>Input Validation:</strong> Validate and sanitize inputs to prevent unauthorized access.</li>
+                    <li><strong>Audit Logs:</strong> Maintain logs of API requests to detect and respond to suspicious activities.</li>
+                    <li><strong>Security Headers:</strong> Use security headers to protect against common attacks (e.g., X-Content-Type-Options, Content-Security-Policy).</li>
+                    <li><strong>Regular Security Testing:</strong> Conduct regular security testing, including penetration tests and code reviews, to identify and fix vulnerabilities.</li>
+                </ul>
 
-                                    <p>And BOOM!!...page deleted..
-                                    </p>
-                                    
-                                    <img src=/images/del-req.png width="1000" height="180">
+                <h3>Conclusion</h3>
+                <p>API security is critical to protect sensitive data and maintain the integrity of your application. By implementing robust security measures, you can prevent unauthorized access and mitigate the risk of attacks.</p>
 
-                                    <p> Then after I create a new account and then copy my new account job-id to to my and replace it with my first account job-id. </p>
-                                   
-                                    <h2> And yes, from this attacker can bruteforce that job-id and delete nearly whole data.</h2>
-                                    <p class="big">In API, always rate limit is also important.<br></p2>
+                <h1>увидимся</h1>
+                <h1>Binary Rip</h1>
 
-                                             
-									<h1>увидимся</h1>
-									<h1>Binary Rip</h1>
-                                        
-                                    <!--
-									<h3 class="major">Vitae phasellus</h3>
-									<p>Cras mattis ante fermentum, malesuada neque vitae, eleifend erat. Phasellus non pulvinar erat. Fusce tincidunt, nisl eget mattis egestas, purus ipsum consequat orci, sit amet lobortis lorem lacus in tellus. Sed ac elementum arcu. Quisque placerat auctor laoreet.</p>
-idhar se hatae go
-									<section class="features">
-										<article>
-											<a href="#" class="image"><img src="/images/pic04.jpg" alt="" /></a>
-											<h3 class="major">Sed feugiat lorem</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
-											<a href="#" class="special">Learn more</a>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
-											<h3 class="major">Nisl placerat</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus ultrices.</p>
-											<a href="#" class="special">Learn more</a>
-										</article>
-									</section>
+            </div>
+        </div>
+    </section>
 
-								</div>
-							</div>
+    <!-- Footer -->
+    <section id="footer">
+        <div class="inner">
+            <h2 class="major">Get in touch</h2>
+            <form method="post" action="#">
+                <div class="fields">
+                    <div class="field">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" />
+                    </div>
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" />
+                    </div>
+                    <div class="field">
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" rows="4"></textarea>
+                    </div>
+                </div>
+                <ul class="actions">
+                    <li><input type="submit" value="Send Message" /></li>
+                </ul>
+            </form>
+            <ul class="contact">
+                <li class="icon solid fa-envelope"><a href="mailto:binaryrip@protonmail.com">binaryrip@protonmail.com</a></li>
+                <li class="icon brands fa-twitter"><a href="https://twitter.com/binary_rip">twitter.com/binary_rip</a></li>
+            </ul>
+            <ul class="copyright">
+                <li>&copy; All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </div>
+    </section>
 
-					</section>
-				-->
-                <!-- Footer -->
-           
-					<section id="footer">
-						<div class="inner">
-							<h2 class="major">Get in touch</h2>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field">
-										<label for="email">Email</label>
-										<input type="email" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="4"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
-							<ul class="contact">
+</div>
 
-								</li>
-								
-								<li class="icon solid fa-envelope"><a href="#">binaryrip@protonmail.com</a></li>
-								<li class="icon brands fa-twitter"><a href="https://twitter.com/binary_rip">twitter.com/binary_rip</a></li>
-							</ul>
-							<ul class="copyright">
-								<li>&copy;All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</div>
-					</section>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
-</html>
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+</body> </html>
